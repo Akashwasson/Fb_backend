@@ -11,6 +11,8 @@ const config = require('./DB');
 const socket = require('socket.io');
 const io =socket(server)
 var SocketManager = require('./models/socketManager');
+var Messages = require('./models/messages');
+var Conversation = require('./models/conversation');
 
 const port = process.env.PORT || 4000;
  
@@ -21,14 +23,7 @@ io.on('connection', (socket) => {
     try{
     data.socketId = socket.id;
     console.log(socket.id)
-    SocketManager.addUserSocket(data,(err,call)=>{
-      if(err){
-        console.log('Failed to register user');
-      } else {
-        console.log('successful to register user');
-      }
-
-    })
+    SocketManager.addUserSocket(data,(err,call)=>{})
     }
     catch(err){
     }
@@ -36,8 +31,37 @@ io.on('connection', (socket) => {
   })
 
   socket.on('join', async (data) => {
-    // socket.join(data.room)
+
     try{
+      Conversation.getUsersWithMessage(data,(err,call)=>{
+        if(err){
+          console.log('Failed to register user');
+        } 
+        if (call!=[]){
+          console.log(call,'this is call')
+            io.to(socket.id).emit('receiveprevmessage', call[0]);
+        }
+      })
+  }
+  catch(err){}
+     
+});
+
+socket.on('sendmessage',async function(data){
+  try{
+    // to from and group id {to: '',from:'',groupid:'', message:''}
+    var sauth = await SocketManager.auth({socketId:socket.id, userId: data.from})
+
+    if(sauth==null){  return console.log("Hacker tried to temper with system",data ,  socket.id)}
+    var mymessage =await Messages.addMessage(data)
+    data.ref = mymessage._id;
+     Conversation.AddRefOfMessage(data,async (err,somedata)=>{
+      // Conversation.getUsersWithMessage(data,(err,call)=>{
+      //   if (call!=[]){
+      //     // console.log(call,'this is call')
+      //       io.to(socket.id).emit('receiveprevmessage', call[0]);
+      //   }
+      // })
       var sendto = await SocketManager.findSocket(data.to);
       
       if(data.msg != null){
@@ -47,10 +71,12 @@ io.on('connection', (socket) => {
       io.to(socket.id).emit('new_msg', {from:data.from, to:data.to, msg: data.msg});  
       }
     }
-  }
-  catch(err){}
-     
-});
+      
+    });
+  
+  }catch(err){}
+
+})
 
 socket.on('disconnect', function (reason) {
   console.log('A user disconnected ' + socket.id);
@@ -93,7 +119,7 @@ const profilepics = require('./routes/profilepics');
 const coverpics = require('./routes/coverpics');
 const friendlists = require('./routes/friendlists');
 const friendrequests = require('./routes/friendrequests');
-const conversations = require('./routes/conversations')
+// const conversations = require('./routes/conversations')
 
 
 app.use('/images', images)
@@ -105,7 +131,7 @@ app.use('/profilepics', profilepics);
 app.use('/coverpics', coverpics);
 app.use('/friendlists',friendlists);
 app.use('/friendrequests',friendrequests);
-app.use('/conversations',conversations)
+// app.use('/conversations',conversations)
 
 // Index Route
 app.get('/', (req, res) => {

@@ -19,7 +19,7 @@ module.exports.findSocket = (data) => {
 }
 
 module.exports.addUserSocket = function(data, callback){
-    console.log('its working')
+    // console.log('its working')
     var query= {userId: data._id};
     var datad = {
         socketId:       data.socketId,
@@ -41,6 +41,6 @@ module.exports.disconnectSocket = function(data, callback){
    
 }
 module.exports.auth = (data)=>{
-    console.log(data);
+    // console.log(data);
     return socManager.findOne({socketId:data.socketId, userId: data.userId , status: 'Online'})
 }
