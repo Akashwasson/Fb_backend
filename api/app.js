@@ -38,7 +38,7 @@ io.on('connection', (socket) => {
           console.log('Failed to register user');
         } 
         if (call!=[]){
-          console.log(call,'this is call')
+          // console.log(call,'this is call')
             io.to(socket.id).emit('receiveprevmessage', call[0]);
         }
       })
