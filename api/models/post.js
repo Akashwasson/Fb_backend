@@ -7,7 +7,8 @@ const post_Schema = mongoose.Schema({
     image: { type: String, default:"" },
     profilepic: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Profilepic' }],
     username:String,
-    comments: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Comment' }]
+    comments: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Comment' }],
+    likes: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Like' }]
 
 });
 

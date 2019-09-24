@@ -26,15 +26,18 @@ module.exports.addToConverstionList = function(data, callback){
 
 module.exports.AddRefOfMessage = (data, callback) => {
   if(data.groupid==null||!data.groupid){
+    // console.log('if part')
       var query= {participants:{$all:[
           {"$elemMatch":{id:data.from}},{"$elemMatch":{id:data.to}}]}
           };
       conversation.findOneAndUpdate(query, {participants:[{id: data.from},{id: data.to}],$push: {messages:data.ref
       }},{ upsert: true , new : true}, callback)
   }else{
+    // console.log('else part')
       var query = {_id:data.groupid};
       conversation.findOneAndUpdate(query, {$push: {messages:data.ref
       }},{ upsert: true , new : true}, callback); 
+      
   } 
 }
 

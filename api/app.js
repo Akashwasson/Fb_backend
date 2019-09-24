@@ -119,6 +119,7 @@ const profilepics = require('./routes/profilepics');
 const coverpics = require('./routes/coverpics');
 const friendlists = require('./routes/friendlists');
 const friendrequests = require('./routes/friendrequests');
+const likes = require('./routes/likes');
 // const conversations = require('./routes/conversations')
 
 
@@ -131,6 +132,7 @@ app.use('/profilepics', profilepics);
 app.use('/coverpics', coverpics);
 app.use('/friendlists',friendlists);
 app.use('/friendrequests',friendrequests);
+app.use('/likes',likes)
 // app.use('/conversations',conversations)
 
 // Index Route
