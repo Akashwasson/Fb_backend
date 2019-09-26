@@ -33,6 +33,7 @@ router.post('/', (req, res, next) => {
 });
 console.log(posted)
 posted.save()
+   // creating empty friendlist per user email
   const friendlist = new Friendlist({
        email : req.body.email,
   })

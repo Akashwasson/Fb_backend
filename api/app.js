@@ -120,7 +120,7 @@ const coverpics = require('./routes/coverpics');
 const friendlists = require('./routes/friendlists');
 const friendrequests = require('./routes/friendrequests');
 const likes = require('./routes/likes');
-// const conversations = require('./routes/conversations')
+const socketManager = require('./routes/socketManagers')
 
 
 app.use('/images', images)
@@ -132,8 +132,8 @@ app.use('/profilepics', profilepics);
 app.use('/coverpics', coverpics);
 app.use('/friendlists',friendlists);
 app.use('/friendrequests',friendrequests);
-app.use('/likes',likes)
-// app.use('/conversations',conversations)
+app.use('/likes',likes);
+app.use('/socketmanager',socketManager);
 
 // Index Route
 app.get('/', (req, res) => {

@@ -14,7 +14,7 @@ router.post('/', (req,res)=>{
 
         const friends = new Friendlist({
             email: req.body.email,
-        //    friendsid : req.body.userid
+           // friendsid : req.body.userid
         }).save().then(doc=>{
             res.json({
                 message:'succesfull'

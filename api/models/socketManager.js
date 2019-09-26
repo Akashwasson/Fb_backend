@@ -17,6 +17,10 @@ module.exports.findSocket = (data) => {
     //     console.log(result,'this is result')
     // })
 }
+module.exports.findbyuserid =function(data, callback) {
+    var query = {userId:data.userId} 
+    socManager.findOne(query,callback)
+}
 
 module.exports.addUserSocket = function(data, callback){
     // console.log('its working')
@@ -34,10 +38,10 @@ module.exports.addUserSocket = function(data, callback){
 module.exports.disconnectSocket = function(data, callback){
     var query = {socketId: data};
     var datad = {
-        status:        'Offline',
         disconenctedAt: new Date(),
+        status:        'Offline',
     }
-    socManager.findOneAndUpdate(query,datad,{upsert:false, new: true },callback);
+    socManager.findOneAndUpdate(query,datad,callback);
    
 }
 module.exports.auth = (data)=>{

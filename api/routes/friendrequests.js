@@ -17,13 +17,6 @@ router.post('/accepted',(req,res)=>{
         res.json({
             msg:"successfull"
         })
-    //    const frnd = new Friendlist({
-    //       friendsid: req.body.id
-    //    }).save().then(doc=>{
-    //        res.json({
-    //            msg:"sucessfull"
-    //        })
-    //    })
    })
     
    .catch(err=>{
