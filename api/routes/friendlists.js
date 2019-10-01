@@ -48,6 +48,20 @@ router.get("/", (req,res) =>{
        error:err
    })
   })
+//   router.get("/:email", (req,res) =>{
+//     datad={
+//         email:req.params.email
+//     }
+//   Friendlist.findbyemail(datad,(err,callback)=>{
+//       if(err){
+       
+//           res.json({success: false, msg:'Failed', error: err});
+//         } else {
+         
+//           res.send(callback)
+//         }
+//     })
+// })
 
 module.exports = router;
 

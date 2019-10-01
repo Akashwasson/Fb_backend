@@ -5,4 +5,9 @@ const friendlist = mongoose.Schema({
     friendsid: [ { type: mongoose.Schema.Types.ObjectId, ref: 'Userdata' }],
 })
 
-module.exports = mongoose.model('Friendlist', friendlist);
+var friendlists = module.exports = mongoose.model('Friendlist', friendlist);
+
+module.exports.findbyemail = function(data, callback){
+    var query = {email: data.email};
+    friendlists.findOne(query,callback).populate({path:'friendsid', populate:{path:'profilepic'}}) 
+}
