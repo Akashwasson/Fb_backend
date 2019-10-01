@@ -4,6 +4,7 @@ var Conversation = require('../models/conversation');
 
  var usersconnected ={};
  var friendsid = [];
+ var allfrnd=[];
 
 module.exports.mysocket = (io)=>{
 
@@ -15,15 +16,16 @@ module.exports.mysocket = (io)=>{
         data.socketId = socket.id;
         // console.log(socket.id)
         usersconnected[socket.id] = data._id;
-        friendsid = data.frndsids
+        allfrnd[socket.id] = data.frndsids;
+        friendsid = allfrnd[socket.id]
         SocketManager.addUserSocket(data,(err,call)=>{})
         // user will send his online status to all of his friends
         for(var i=0; i<friendsid.length;i++){
         var sendto = await SocketManager.findSocket(friendsid[i]);
-        // console.log(sendto.socketId,i)
+         console.log(sendto.socketId,i)
         io.to(sendto.socketId).emit('online',{userId:data._id, status:"Online"})
         }
-        console.log(friendsid[socket.id].length,'this iszzz')
+        // console.log(friendsid[0],'this iszzz')
         }
         catch(err){
         }
@@ -92,12 +94,14 @@ module.exports.mysocket = (io)=>{
         try{
              var id = usersconnected[socket.id]  
              SocketManager.disconnectSocket(socket.id,(err,call)=>{})  
+             var friendid = allfrnd[socket.id]
               //user will send offline status to all of his friends
-          for(var i=0; i<friendsid.length;i++){
-            var sendto = await SocketManager.findSocket(friendsid[i]);       
+          for(var i=0; i<friendid.length;i++){
+            var sendto = await SocketManager.findSocket(friendid[i]);       
              io.to(sendto.socketId).emit('offline',{userId:id, status:"Offline"})
-             console.log(sendto.socketId,'this is friendsis')       
+                  
            }
+           console.log(friendid,friendid.length,'this is friendsis')  
           
         }
         catch(err){}
