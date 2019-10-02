@@ -10,7 +10,8 @@ const mongoose = require('mongoose');
 const config = require('./DB');
 const socket = require('socket.io');
 const io =socket(server);
-var Mysocket = require('./socket/mysocket')
+var Mysocket = require('./socket/mysocket');
+
 
 // for sockets
 Mysocket.mysocket(io);

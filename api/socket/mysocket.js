@@ -1,6 +1,7 @@
 var SocketManager = require('../models/socketManager');
 var Messages = require('../models/messages');
 var Conversation = require('../models/conversation');
+var friendrequest = require('../models/friendrequest');
 
  var usersconnected ={};
  var friendsid = [];
@@ -87,7 +88,7 @@ module.exports.mysocket = (io)=>{
               
           } catch (error) {}
  
-      } )
+      })
       
       socket.on('disconnect',async function (reason) {
         console.log('A user disconnected ' + socket.id);
@@ -107,5 +108,18 @@ module.exports.mysocket = (io)=>{
         catch(err){}
       });
       
+      socket.on('sendrqst',async function(data){
+        try {
+          friendrequest.sendrequest(data,async (err,call)=>{
+            if(call!=[]){
+              var sendto = await SocketManager.findSocket(data.recipient);
+              io.to(sendto.socketId).emit('sendrequest',{_id:data.requester,email:data.email})
+            }
+          })        
+        } catch (error) {
+            
+        }
       });
+
+      })
 }

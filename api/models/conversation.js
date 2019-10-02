@@ -20,7 +20,7 @@ module.exports.addToConverstionList = function(data, callback){
       participants:   [data.from,data.to],
       createdAt:           new Date(),
   } 
-  console.log(data,'sadsadsadsa')
+
   conversation.findOneAndUpdate(query,datad,{upsert:true, new: true },callback);
 }
 
@@ -50,7 +50,6 @@ module.exports.getUsersWithMessage = (data, callback) => {
     path:  'messages',
     select: {},
     options:{ sort:{time : 1} },
-    // match: { Option: {$in:['Visible','Deleted']}}
   })
   .exec(callback);
   // need to ADD LIMIT ON AFTER SORT ON POPULATE AS NORMAL LIMIT NOT WORKINGH
