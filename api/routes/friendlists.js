@@ -36,18 +36,6 @@ router.get("/", (req,res) =>{
    })
   })
 
-//   router.get("/:email", (req,res) =>{
-//     Friendlist.find({email:req.params.email}).populate({path:'friendsid', populate:{path:'profilepic'}})
-//     .exec().then(result=>{
-//         if(!result){
-//             console.log(1)
-//         }
-//      res.send(result)
-//    })
-//    .catch(err=>{
-//        error:err
-//    })
-//   })
   router.get("/:email", (req,res) =>{
     datad={
         email:req.params.email
@@ -61,6 +49,25 @@ router.get("/", (req,res) =>{
           res.send(callback)
         }
     })
+})
+
+router.delete("/:email/:friendid",(req,res)=>{
+  datad={
+    email:req.params.email,
+    friendid:req.params.friendid
+}
+Friendlist.removefriend(datad,(err,callback)=>{
+  if(err){ 
+      res.json({success: false, msg:'Failed', error: err});
+    } else {
+     
+      if(callback!=[]){
+        res.json({
+          msg:"successfull"
+        })
+      }
+    }
+})
 })
 
 module.exports = router;

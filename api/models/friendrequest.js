@@ -13,15 +13,17 @@ var friendrqst = module.exports = mongoose.model('Friendrequest', friendrequest)
 
 module.exports.findbyrecipient = function(data, callback){
   var  query = {recipient: data.recipient}
-    friendrqst.findOne(query,callback);
+    friendrqst.find(query,callback).populate({path:'requester', populate:{path:'profilepic'}});
 }
+
 
 module.exports.findbyrequester = function(data, callback){
     var  query = {requester: data.requester}
-      friendrqst.findOne(query,callback);
+      friendrqst.find(query,callback)
 }
 
 module.exports.sendrequest = function(data,callback){
+    console.log(data)
     var query= {participants:{$all:[
         {"$elemMatch":{id:data.requester}},{"$elemMatch":{id:data.recipient}}]}};
         var datad = {
@@ -32,14 +34,7 @@ module.exports.sendrequest = function(data,callback){
             createdAt:      new Date(),
         }
         // ,datad,{upsert:true, new: true },
-      friendrqst.findOneAndUpdate(query,datad,{upsert:true, new: true },callback).then(doc=>{
-        if(doc)
-        {console.log(doc,'this is doc')
-      }
-      else(
-        console.log('fuck')
-      )
-      }) 
+      friendrqst.findOneAndUpdate(query,datad,{upsert:true, new: true },callback)
 }
 
 module.exports.acceptrequest = function(data,callback){
@@ -59,3 +54,5 @@ module.exports.rejectrequest = function(data,callback){
 
       friendrqst.findOneAndDelete(query,callback) ; 
 }
+
+

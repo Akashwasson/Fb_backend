@@ -37,7 +37,7 @@ router.get('/:Id',(req, res)=>{
 });
 
 router.get('/mail/:email',(req, res)=>{
-  Userdata.find({email: req.params.email}).populate('coverpic')
+  Userdata.find({email: req.params.email}).populate('coverpic').populate('profilepic')
   .then(result=>{
      if(result){
     

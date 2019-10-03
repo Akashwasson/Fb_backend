@@ -61,6 +61,45 @@ router.get("/", (req,res) =>{
    .catch(err=>{
        error:err
    })
+  });
+
+  router.post("/statusAccpected",(req,res)=>{
+    try{ 
+    var datad = {
+          requester:req.body.requester,
+          recipient:req.body.recipient
+      }
+      Friendrequest.acceptrequest(datad,(err,callback)=>{
+        if(err){
+         
+            res.json({success: false, msg:'Failed', error: err});
+          } else {
+           
+            res.send(callback)
+          }
+        })
+} catch (error) {
+    
+}
+  })
+
+  router.get("/byid/:recipientid", (req,res) =>{   
+    try {
+        var datad ={
+            recipient: req.params.recipientid
+        }
+        Friendrequest.findbyrecipient(datad,(err,callback)=>{
+            if(err){
+             
+                res.json({success: false, msg:'Failed', error: err});
+              } else {
+               
+                res.send(callback)
+              }
+            })
+    } catch (error) {
+        
+    }
   })
 
 module.exports = router;
