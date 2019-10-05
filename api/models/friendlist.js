@@ -12,26 +12,6 @@ module.exports.findbyemail = function(data, callback){
     friendlists.findOne(query,callback).populate({path:'friendsid', populate:{path:'profilepic'}}) 
     .then(doc=>{
         if(doc){
-            console.log(doc)
-        }
-        else{
-            console.log("fuck")
-        }
-    })
-    .catch(err=>{
-        error:err
-     })
-}
-
-module.exports.removefriend = function(data, callback){
-     var query1 = {"_id": data.friendid};
-    // var query= {friendsid:[
-    //     {"$elemMatch":{_id:data.friendid}}]
-    //     };
-    var query = {email: data.email};
-    friendlists.findOneAndUpdate(query,{$pullAll:{friendsid:[query1]}},callback).populate({path:'friendsid', populate:{path:'profilepic'}}) 
-    .then(doc=>{
-        if(doc){
             // console.log(doc)
         }
         else{
@@ -41,4 +21,11 @@ module.exports.removefriend = function(data, callback){
     .catch(err=>{
         error:err
      })
+}
+
+module.exports.removefriend = function(data, callback){
+     var query1 = {"_id": data.friendid};
+    var query = {email: data.email};
+    friendlists.findOneAndUpdate(query,{$pullAll:{friendsid:[query1]}},callback).populate({path:'friendsid', populate:{path:'profilepic'}}) 
+   
 }

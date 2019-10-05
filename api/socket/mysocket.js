@@ -61,7 +61,7 @@ module.exports.mysocket = (io)=>{
             
             if(data.msg != null){
               if(sendto != null){
-                console.log(sendto.socketId,data.to,'this is sendto')
+                // console.log(sendto.socketId,data.to,'this is sendto')
             io.to(sendto.socketId).emit('new_msg', {from:data.from, to:data.to, msg: data.msg});
             io.to(socket.id).emit('new_msg', {from:data.from, to:data.to, msg: data.msg});  
             }
@@ -102,7 +102,7 @@ module.exports.mysocket = (io)=>{
              io.to(sendto.socketId).emit('offline',{userId:id, status:"Offline"})
                   
            }
-           console.log(friendid,friendid.length,'this is friendsis')  
+          //  console.log(friendid,friendid.length,'this is friendsis')  
           
         }
         catch(err){}

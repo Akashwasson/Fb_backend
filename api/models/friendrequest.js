@@ -52,7 +52,7 @@ module.exports.rejectrequest = function(data,callback){
     var query= {participants:{$all:[
         {"$elemMatch":{id:data.requester}},{"$elemMatch":{id:data.recipient}}]}};
 
-      friendrqst.findOneAndDelete(query,callback) ; 
+      friendrqst.findOneAndRemove(query,callback) ; 
 }
 
 

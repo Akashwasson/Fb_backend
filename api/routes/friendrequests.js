@@ -102,4 +102,19 @@ router.get("/", (req,res) =>{
     }
   })
 
+  router.delete("/:friendid/:myid",(req,res)=>{
+   var data = {
+     requester:req.params.myid,
+     recipient:req.params.friendid
+   }
+   Friendrequest.rejectrequest(data,(err,callback)=>{
+     if (callback){
+       console.log('succesfull')
+     }
+     else{
+       console.log(err)
+     }
+   })
+   })
+
 module.exports = router;

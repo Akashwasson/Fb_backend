@@ -2,6 +2,7 @@ const express = require ('express');
 const router = express.Router();
 const mongoose = require ('mongoose');
 const Friendlist = require('../models/friendlist');
+const Friendrequest = require('../models/friendrequest');
 const Userdata = require('../models/userdata');
 
 // router.post('/', (req,res)=>{
@@ -52,10 +53,11 @@ router.get("/", (req,res) =>{
 })
 
 router.delete("/:email/:friendid",(req,res)=>{
-  datad={
+ var datad={
     email:req.params.email,
     friendid:req.params.friendid
 }
+
 Friendlist.removefriend(datad,(err,callback)=>{
   if(err){ 
       res.json({success: false, msg:'Failed', error: err});
@@ -67,7 +69,7 @@ Friendlist.removefriend(datad,(err,callback)=>{
         })
       }
     }
-})
+});
 })
 
 module.exports = router;
