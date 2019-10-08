@@ -43,7 +43,8 @@ const fs = require ('fs')
     base64Data='/'+base64Data.join('/');
     var fileName = data.userid +  new Date().toISOString().replace(/:/g, '-') + data.filename ;
     fs.writeFile('./uploads/posts/'+ fileName, base64Data, encoding, function(err) {
-      // console.log(err, 'this is error');
+      //  console.log(err, 'this is error
+    
     });
     
     const imgdata =new Post({
@@ -53,9 +54,10 @@ const fs = require ('fs')
       image:fileName,
       profilepic: data.profilepic,
       username: data.username
-    }) 
-    console.log(imgdata._id,"this is doc") 
+    })
      imgdata.save()
+    console.log(imgdata._id,"this is doc") 
+     
 
 })
 .catch(err=>{
