@@ -26,7 +26,8 @@ const fs = require ('fs')
         userid: data.userid,
         text_post: data.text_post,
         profilepic: data.profilepic,
-        username: data.username
+        username: data.username,
+        createdAt:      new Date(),
       })
       console.log(3)
        console.log(posttext)
@@ -53,7 +54,8 @@ const fs = require ('fs')
       text_post: data.text_post,
       image:fileName,
       profilepic: data.profilepic,
-      username: data.username
+      username: data.username,
+      createdAt:      new Date(),
     })
      imgdata.save()
     console.log(imgdata._id,"this is doc") 
@@ -101,6 +103,15 @@ const fs = require ('fs')
    })
   })
   
+  router.delete("/:Id", (req,res) =>{
+    Post.remove({_id:req.params.Id})
+    .exec().then(result=>{
+   res.send(result)
+   })
+   .catch(err=>{
+       error:err
+   })
+  })
 
   module.exports = router;
 
