@@ -23,7 +23,7 @@ module.exports.mysocket = (io)=>{
         // user will send his online status to all of his friends
         for(var i=0; i<friendsid.length;i++){
         var sendto = await SocketManager.findSocket(friendsid[i]);
-         console.log(sendto.socketId,i)
+        //  console.log(sendto.socketId,i)
         io.to(sendto.socketId).emit('online',{userId:data._id, status:"Online"})
         }
         // console.log(friendsid[0],'this iszzz')
