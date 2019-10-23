@@ -2,6 +2,7 @@ const mongoose = require('mongoose')
 
 const friendlist = mongoose.Schema({
     email:  {type: String},
+    _id: {type : String},
     friendsid: [ { type: mongoose.Schema.Types.ObjectId, ref: 'Userdata' }],
 })
 
@@ -12,7 +13,7 @@ module.exports.findbyemail = function(data, callback){
     friendlists.findOne(query,callback).populate({path:'friendsid', populate:{path:'profilepic'}}) 
     .then(doc=>{
         if(doc){
-            // console.log(doc)
+            //  console.log("success")
         }
         else{
             console.log("failed")
@@ -26,6 +27,7 @@ module.exports.findbyemail = function(data, callback){
 module.exports.removefriend = function(data, callback){
      var query1 = {"_id": data.friendid};
     var query = {email: data.email};
-    friendlists.findOneAndUpdate(query,{$pullAll:{friendsid:[query1]}},callback).populate({path:'friendsid', populate:{path:'profilepic'}}) 
+    friendlists.findOneAndUpdate(query,{$pullAll:{friendsid:[query1]}},callback)
+    // .populate({path:'friendsid', populate:{path:'profilepic'}}) 
    
 }

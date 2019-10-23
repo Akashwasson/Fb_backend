@@ -33,7 +33,8 @@ const coverpics = require('./routes/coverpics');
 const friendlists = require('./routes/friendlists');
 const friendrequests = require('./routes/friendrequests');
 const likes = require('./routes/likes');
-const socketManager = require('./routes/socketManagers')
+const socketManager = require('./routes/socketManagers');
+const friendpost = require('./routes/friendsposts');
 
 
 app.use('/images', images)
@@ -47,6 +48,7 @@ app.use('/friendlists',friendlists);
 app.use('/friendrequests',friendrequests);
 app.use('/likes',likes);
 app.use('/socketmanager',socketManager);
+app.use('/friendsposts', friendpost)
 
 // Index Route
 app.get('/', (req, res) => {

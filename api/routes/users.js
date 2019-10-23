@@ -4,6 +4,7 @@ const mongoose = require ('mongoose');
 const User = require('../models/user');
 const Userdata = require('../models/userdata');
 const Friendlist = require('../models/friendlist');
+const Friendpost = require('../models/friendspost');
 
 // Register
 router.post('/', (req, res, next) => {
@@ -28,18 +29,22 @@ router.post('/', (req, res, next) => {
   const posted = new Userdata({
     _id: new mongoose.Types.ObjectId(),
     username: req.body.firstName + " "+ req.body.lastName,
-    email: req.body.email,
-   
+    email: req.body.email,  
 });
-console.log(posted)
+ console.log(posted)
+// console.log(posted._id)
 posted.save()
-   // creating empty friendlist per user email
+   // creating empty friendlist for each user
   const friendlist = new Friendlist({
-       email : req.body.email,
+       email : req.body.email,  
   })
-   friendlist.save()
+   friendlist.save();
 
-
+   const friendpost = new Friendpost({
+     email : req.body.email,
+     _id : posted._id
+   })
+   friendpost.save();
 });
 
 router.get("/", (req, res)=>{

@@ -41,7 +41,7 @@ module.exports.disconnectSocket = function(data, callback){
         disconenctedAt: new Date(),
         status:        'Offline',
     }
-    console.log('this is disconnect')
+    // console.log('this is disconnect')
     socManager.findOneAndUpdate(query,datad,callback);
    
 }

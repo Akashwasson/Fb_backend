@@ -3,14 +3,16 @@ const router = express.Router();
 const mongoose = require ('mongoose');
 const Post = require ('../models/post');
 const Userdata = require('../models/userdata');
+const friendlist = require('../models/friendlist');
+const friendpost = require('../models/friendspost')
 const fs = require ('fs')
  
   router.post("/", (req,res,next) =>{
-    
+    var list = []
     var data= req.body;
     Userdata.findById( data.userid)
     .then(result=>{
-      console.log(result, 'this is result')
+      // console.log(result, 'this is result')
       if(!result){
         // return res.status(404).json({
         //     message: "Userdata not found"
@@ -20,7 +22,6 @@ const fs = require ('fs')
         }
    
     if(data.base64Data==""){
-      console.log(2)
       const posttext = new Post({
         _id: mongoose.Types.ObjectId(),
         userid: data.userid,
@@ -29,9 +30,45 @@ const fs = require ('fs')
         username: data.username,
         createdAt:      new Date(),
       })
-      console.log(3)
-       console.log(posttext)
           posttext.save()
+          // console.log(posttext._id,'this is iddd')
+       var   datad={
+            email:data.email
+        }
+          
+          friendlist.findbyemail(datad,(err,callback)=>{
+            if(err){
+                 console.log(err)
+                res.json({success: false, msg:'Failed', error: err});
+              } else {
+                    list.push(callback)
+                    var friendsdata = '';
+                     friendsdata =(list.map(item=>item.friendsid))
+                     var ids = friendsdata[0].map(item=>item._id)
+                     for(var i =0; i<ids.length;i++){
+                       var newdata ={
+                         id: ids[i],
+                         postid: posttext._id
+                       }
+                       friendpost.addposts(newdata,(err,callback1)=>{
+                      try {
+                        if(err){
+                         
+                          res.json({success: false, msg:'Failed', error: err});
+                        } else {
+                           console.log(callback1,'final call')
+                          res.send(callback1)
+                        }
+                      } catch (error) {
+                        
+                      }  
+                      })
+                      
+                      
+                     }
+                
+              }
+          })
         return;
     }
     var base64Data = req.body.base64Data.split("/");
@@ -59,6 +96,43 @@ const fs = require ('fs')
     })
      imgdata.save()
     console.log(imgdata._id,"this is doc") 
+    var   datad={
+      email:data.email
+  }
+    
+    friendlist.findbyemail(datad,(err,callback)=>{
+      if(err){
+           console.log(err)
+          res.json({success: false, msg:'Failed', error: err});
+        } else {
+              list.push(callback)
+              var friendsdata = '';
+               friendsdata =(list.map(item=>item.friendsid))
+               var ids = friendsdata[0].map(item=>item._id)
+               for(var i =0; i<ids.length;i++){
+                 var newdata ={
+                   id: ids[i],
+                   postid: imgdata._id
+                 }
+                 friendpost.addposts(newdata,(err,callback1)=>{
+                try {
+                  if(err){
+                   
+                    res.json({success: false, msg:'Failed', error: err});
+                  } else {
+                     console.log(callback1,'final call')
+                    res.send(callback1)
+                  }
+                } catch (error) {
+                  
+                }  
+                })
+                
+                
+               }
+          
+        }
+    })
      
 
 })
@@ -96,7 +170,7 @@ const fs = require ('fs')
   router.get("/:Id", (req,res) =>{
     Post.findById(req.params.Id)
     .exec().then(result=>{
-     console.log(res.send(result))
+     res.send(result)
    })
    .catch(err=>{
        error:err
