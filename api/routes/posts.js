@@ -155,7 +155,7 @@ const fs = require ('fs')
   })
 
   router.get("/byuserid/:userid", (req,res) =>{
-    Post.find({userid: req.params.userid}).sort({ _id: -1 }).populate('profilepic').populate('comments')
+    Post.find({userid: req.params.userid}).sort({ _id: -1 }).populate({path:'profilepic comments',populate:{path:'userid',populate:{path:'profilepic'}}})
     .exec().then(result=>{
        if(!result){
          console.log(1)
