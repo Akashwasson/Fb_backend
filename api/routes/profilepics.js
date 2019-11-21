@@ -15,6 +15,20 @@ const Userdata = require ('../models/userdata')
            });
         }
          var data= req.body;
+         if(data.base64Data==""){
+         console.log('fuck')
+         const imgdata =new Image({
+          _id: mongoose.Types.ObjectId(),
+          userid: data._id,
+          profilepic: "face.jpg"         
+      }) 
+      console.log(imgdata,"this is imagedatda") 
+      imgdata.save()  
+      doc.profilepic.push(imgdata._id) 
+        doc.save()
+        console.log(doc,'mfff')   
+         return;
+        }
          var base64Data = req.body.base64Data.split("/");
         //  console.log(base64Data[1]);
          var filetype = base64Data[1].replace(/,/g,"").split(';');

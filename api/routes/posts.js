@@ -28,6 +28,7 @@ const fs = require ('fs')
         text_post: data.text_post,
         profilepic: data.profilepic,
         username: data.username,
+        email: data.email,
         createdAt:      new Date(),
       })
           posttext.save()
@@ -92,6 +93,7 @@ const fs = require ('fs')
       image:fileName,
       profilepic: data.profilepic,
       username: data.username,
+      email: data.email,
       createdAt:      new Date(),
     })
      imgdata.save()

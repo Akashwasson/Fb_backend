@@ -37,6 +37,7 @@ posted.save()
    // creating empty friendlist for each user
   const friendlist = new Friendlist({
        email : req.body.email,  
+       _id : posted._id
   })
    friendlist.save();
 

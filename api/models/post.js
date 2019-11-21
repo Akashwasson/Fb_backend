@@ -6,7 +6,8 @@ const post_Schema = mongoose.Schema({
     text_post:{type:String, default:""},
     image: { type: String, default:"" },
     profilepic: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Profilepic' }],
-    username:String,
+    username:{type : String},
+    email:{type : String},
     comments: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Comment' }],
     likes: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Like' }],
     createdAt: {type: Date}
