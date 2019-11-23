@@ -5,6 +5,7 @@ const post_Schema = mongoose.Schema({
     userid: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Userdata' }],
     text_post:{type:String, default:""},
     image: { type: String, default:"" },
+    video:{ type: String, default:"" },
     profilepic: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Profilepic' }],
     username:{type : String},
     email:{type : String},

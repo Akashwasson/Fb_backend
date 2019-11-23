@@ -91,7 +91,7 @@ module.exports.mysocket = (io)=>{
       })
       
       socket.on('disconnect',async function (reason) {
-        console.log('A user disconnected ' + socket.id);
+        // console.log('A user disconnected ' + socket.id);
         try{
              var id = usersconnected[socket.id]  
              SocketManager.disconnectSocket(socket.id,(err,call)=>{})  
