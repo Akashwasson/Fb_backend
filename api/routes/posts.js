@@ -20,8 +20,7 @@ router.post("/video",(req,res)=>{
           });
         }
           var base64Data = req.body.base64Data.replace(/,/g,"/").split("/");
-  
-          console.log(base64Data[1]);
+          // console.log(base64Data[1]);
           var filetype = base64Data[1].replace(/,/g,"").split(';');
           console.log(filetype)
           var encoding= filetype[1];

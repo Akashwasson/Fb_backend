@@ -52,5 +52,5 @@ module.exports.getUsersWithMessage = (data, callback) => {
     options:{ sort:{time : 1} },
   })
   .exec(callback);
-  // need to ADD LIMIT ON AFTER SORT ON POPULATE AS NORMAL LIMIT NOT WORKINGH
+  
 }
