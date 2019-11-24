@@ -1,7 +1,7 @@
 const express = require('express');
 const app = express();
-let http = require('http');
-let server = http.Server(app);
+const http = require('http');
+const server = http.Server(app);
 const path = require('path');
 const bodyParser = require('body-parser');
 const cors = require('cors');
@@ -35,6 +35,7 @@ const friendrequests = require('./routes/friendrequests');
 const likes = require('./routes/likes');
 const socketManager = require('./routes/socketManagers');
 const friendpost = require('./routes/friendsposts');
+const introschema = require('./routes/intros');
 
 
 app.use('/images', images)
@@ -48,7 +49,8 @@ app.use('/friendlists',friendlists);
 app.use('/friendrequests',friendrequests);
 app.use('/likes',likes);
 app.use('/socketmanager',socketManager);
-app.use('/friendsposts', friendpost)
+app.use('/friendsposts', friendpost);
+app.use('/introschema',introschema);
 
 // Index Route
 app.get('/', (req, res) => {

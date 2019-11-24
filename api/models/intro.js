@@ -13,4 +13,38 @@ const intro_schema = mongoose.Schema({
     mail: {type:String},
 });
 
-module.exports = mongoose.model('Introschema',intro_schema);
+const introschema = module.exports = mongoose.model('Introschema',intro_schema);
+
+module.exports.findbyemail = function(data, callback){
+    var query = {email: data.email};
+    introschema.findOne(query,callback) 
+    .then(doc=>{
+        if(doc){
+              console.log("success")
+        }
+        else{
+            console.log("failed")
+        }
+    })
+    .catch(err=>{
+        error:err
+     })
+}
+
+module.exports.fillintro = function(data ,callback){
+    var query = {email: data.email};
+    var  datad = {
+        _id: data._id,
+         email: data.email,
+         describe: data.describe,
+         work: data.work,
+         college: data.college,
+         school: data.school,
+         livesin: data.livesin,
+         from: data.from,
+         instagram: data.instagram,
+         mail: data.mail
+    }
+    
+    introschema.findOneAndUpdate(query,datad,{upsert:true, new:true},callback);
+}

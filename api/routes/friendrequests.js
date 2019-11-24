@@ -30,10 +30,9 @@ router.post('/send',(req,res)=>{
         if(!result){
             res.status(401).json({
                 msg:"Friendlist of this user not found"
-            })
-            
+            })          
         }
-        console.log('efsef')
+
         const frndrqst = new Friendrequest({
             sentto: req.body.id
         })

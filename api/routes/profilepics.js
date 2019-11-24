@@ -21,11 +21,10 @@ const Userdata = require ('../models/userdata')
           userid: data._id,
           // profilepic: "face.jpg"         
       }) 
-      console.log(imgdata,"this is imagedatda") 
+      // console.log(imgdata,"this is imagedatda") 
       imgdata.save()  
       doc.profilepic.push(imgdata._id) 
         doc.save()
-
          return;
         }
          var base64Data = req.body.base64Data.split("/");
@@ -45,7 +44,7 @@ const Userdata = require ('../models/userdata')
             userid: data._id,
             profilepic:fileName
         })     
-        console.log(imgdata._id,"this is doc") 
+        // console.log(imgdata._id,"this is doc") 
         imgdata.save()  
         doc.profilepic.push(imgdata._id) 
         doc.save()
@@ -75,7 +74,7 @@ const Userdata = require ('../models/userdata')
   router.get("/:Id", (req,res) =>{
     Image.findById(req.params.Id)
     .exec().then(result=>{
-     console.log(res.send(result))
+    //  console.log(res.send(result))
    })
    .catch(err=>{
        error:err
@@ -84,7 +83,7 @@ const Userdata = require ('../models/userdata')
   router.delete("/:Id", (req,res) =>{
     Image.remove({_id:req.params.Id})
     .exec().then(result=>{
-     console.log(res.send(result))
+    //  console.log(res.send(result))
    })
    .catch(err=>{
        error:err

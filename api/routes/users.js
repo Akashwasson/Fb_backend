@@ -5,6 +5,7 @@ const User = require('../models/user');
 const Userdata = require('../models/userdata');
 const Friendlist = require('../models/friendlist');
 const Friendpost = require('../models/friendspost');
+const Introschema = require('../models/intro');
 
 // Register
 router.post('/', (req, res, next) => {
@@ -16,7 +17,6 @@ router.post('/', (req, res, next) => {
     dob:req.body.dob,
     sex:req.body.sex
   });
-  
   
   User.addUser(newUser, (err, user) => {
     if(err){
@@ -31,8 +31,7 @@ router.post('/', (req, res, next) => {
     username: req.body.firstName + " "+ req.body.lastName,
     email: req.body.email,  
 });
- console.log(posted)
-// console.log(posted._id)
+ 
 posted.save()
    // creating empty friendlist for each user
   const friendlist = new Friendlist({
@@ -46,6 +45,12 @@ posted.save()
      _id : posted._id
    })
    friendpost.save();
+
+   const introschema = new Introschema({
+     email : req.body.email,
+     _id : posted._id
+   })
+   introschema.save();
 });
 
 router.get("/", (req, res)=>{
