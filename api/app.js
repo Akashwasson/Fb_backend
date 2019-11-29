@@ -16,12 +16,23 @@ var Mysocket = require('./socket/mysocket');
 // for sockets
 Mysocket.mysocket(io);
 
+//port number
 const port = process.env.PORT || 4000;
 
+//cor middleware
 app.use(cors());
+
+//static folder
 app.use(express.static(__dirname + '/uploads'));
+
+//limiting the size
 app.use(bodyParser.json({limit: '50mb'}));
 app.use(bodyParser.urlencoded({limit: '50mb', extended: true}));
+
+
+// Passport Middleware
+app.use(passport.initialize());
+app.use(passport.session());
 
 const images = require ('./routes/images');
 const users = require('./routes/users');

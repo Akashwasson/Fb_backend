@@ -1,6 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const mongoose = require ('mongoose');
+const jwt = require('jsonwebtoken');
+const config = require('../config/config');
 const User = require('../models/user');
 const Userdata = require('../models/userdata');
 const Friendlist = require('../models/friendlist');
@@ -76,12 +78,37 @@ router.get("/:id", (req, res)=>{
 
 // Authenticate
 router.post('/authenticate', (req, res, next) => {
-  res.send('AUTHENTICATE');
+  const email = req.body.email;
+  const password = req.body.password;
+ 
+  User.getUserByemail(email, (err, user) => {
+    if(err) throw err;
+    if(!user) {
+      return res.json({success: false, msg: 'Wrong email'});
+    }
+
+    User.comparePassword(password, user.password, (err, isMatch) => {
+      if(err) throw err;
+      if(isMatch) {
+        
+        const token = jwt.sign({data: user}, config.secret, {
+          expiresIn: 604800 // 1 week
+        });
+        res.json({
+          success: true,
+          token: token,
+          user: {
+            id: user._id,
+            name: user.firstName,
+            email: user.email
+          }
+        })
+      } else {
+        return res.json({success: false, msg: 'Wrong password'});
+      }
+    });
+  });
 });
 
-// Profile
-router.get('/profile', (req, res, next) => {
-  res.send('PROFILE');
-});
 
 module.exports = router;
