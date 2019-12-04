@@ -7,6 +7,7 @@ const friendlist = require('../models/friendlist');
 const friendpost = require('../models/friendspost')
 const fs = require ('fs')
  
+//video uploading here
 router.post("/video",(req,res)=>{
   var list = []
     var data= req.body;
@@ -91,6 +92,8 @@ router.post("/video",(req,res)=>{
       
     })
 })
+
+// text and image posting here
 
   router.post("/", (req,res,next) =>{
     var list = []
