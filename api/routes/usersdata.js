@@ -50,6 +50,21 @@ router.get('/mail/:email',(req, res)=>{
   
  });
 
+ router.get('/byname/:username',(req, res)=>{
+   Userdata.find({username: req.params.username}).populate('coverpic').populate('profilepic')
+   .then(result=>{
+      console.log(result)
+      if(result){
+     
+       res.send(result)
+      }
+     })
+     .catch(err=>{
+         error:err
+     })
+   
+  });
+
 //  router.get('/delpost', (req, res)=>{
 //   Userdata.find(req.body.email)
 //   .then(result=>{
