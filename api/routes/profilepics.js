@@ -30,7 +30,7 @@ const Userdata = require ('../models/userdata')
             res.send(callback)
           }
       })
-      doc.profilepic.unshift(imgdata._id) 
+      doc.profilepic.push(imgdata._id) 
       console.log(doc)
         doc.save()
          return;
@@ -62,7 +62,7 @@ const Userdata = require ('../models/userdata')
             }
         })
         
-        doc.profilepic.unshift(imgdata._id) 
+        doc.profilepic.push(imgdata._id) 
        
         doc.save()
                                

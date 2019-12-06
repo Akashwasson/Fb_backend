@@ -15,7 +15,8 @@ var Mysocket = require('./socket/mysocket');
 
 // for sockets
 Mysocket.mysocket(io);
-
+// io.set('heartbeat timeout', 4000); 
+// io.set('heartbeat interval', 2000);
 //port number
 const port = process.env.PORT || 4000;
 

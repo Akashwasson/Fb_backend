@@ -20,10 +20,10 @@ module.exports.findbyemail = function(data, callback){
     introschema.findOne(query,callback) 
     .then(doc=>{
         if(doc){
-              console.log("success")
+            //   console.log("success11")
         }
         else{
-            console.log("failed")
+            // console.log("failed")
         }
     })
     .catch(err=>{

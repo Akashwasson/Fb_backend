@@ -12,10 +12,11 @@ module.exports.mysocket = (io)=>{
     io.on('connection', (socket) => {
   
       socket.on('registeruser', async function(data){
+        
         // need {_id: userid} 
         try{
         data.socketId = socket.id;
-        // console.log(socket.id)
+        //  console.log(socket.id," user connected")
         usersconnected[socket.id] = data._id;
         allfrnd[socket.id] = data.frndsids;
         friendsid = allfrnd[socket.id]
@@ -80,7 +81,7 @@ module.exports.mysocket = (io)=>{
         for(var i=0; i<friendsid.length;i++){
             var friends = await SocketManager.findSocket(friendsid[i]);
             
-            io.to(socket.id).emit('status',{userId:friends.userId, status:friends.status})
+            io.to(socket.id).emit('status',{userId:friends.userId, status:friends.status , socketId:socket.id})
          
             }
             // console.log(data.frndsids,'this is length')
@@ -89,9 +90,28 @@ module.exports.mysocket = (io)=>{
           } catch (error) {}
  
       })
+
+      socket.on('end', async function() {
+        try{
+          var id = usersconnected[socket.id]  
+          SocketManager.disconnectSocket(socket.id,(err,call)=>{})  
+          var friendid = allfrnd[socket.id]
+           //user will send offline status to all of his friends
+       for(var i=0; i<friendid.length;i++){
+         var sendto = await SocketManager.findSocket(friendid[i]);       
+          io.to(sendto.socketId).emit('offline',{userId:id, status:"Offline"})
+               
+        } 
+         socket.disconnect();
+     }
+     catch(err){}
+        
+        
+    });
       
-      socket.on('disconnect',async function (reason) {
-        // console.log('A user disconnected ' + socket.id);
+      socket.on('disconnect',async function (data) {
+
+         
         try{
              var id = usersconnected[socket.id]  
              SocketManager.disconnectSocket(socket.id,(err,call)=>{})  

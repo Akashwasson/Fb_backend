@@ -23,7 +23,7 @@ module.exports.findbyuserid =function(data, callback) {
 }
 
 module.exports.addUserSocket = function(data, callback){
-    // console.log('its working')
+     
     var query= {userId: data._id};
     var datad = {
         socketId:       data.socketId,
