@@ -21,15 +21,7 @@ router.post('/',  (req, res, next) => {
   });
   
   User.addUser(newUser, (err, user) => {
-  //  try {
-  //   if(err){
-  //     res.json({success: false, msg:'Failed to register user'});
-  //   } else {
-  //     res.json({success: true, msg:'User registered'});
-  //   }
-  //  } catch (error) {
-  //    console.log(error,'dfsdf')
-  //  } 
+   
      if(user){
       
       //creating token here 
@@ -64,7 +56,7 @@ router.post('/',  (req, res, next) => {
           });
         });
       } catch (error) {
-         console.log(error)
+        //  console.log(error)
       }
      }
   });
@@ -111,7 +103,7 @@ router.get("/:id", (req, res)=>{
     if(err){
       res.json({success: false, msg:'Failed to find register user'});
     } else {
-      console.log(user)
+      // console.log(user)
       res.json({success: true, msg:'Founded registered user sucessfully'});
       
     }
@@ -124,7 +116,7 @@ router.post('/authenticate', (req, res, next) => {
   const password = req.body.password;
  
   User.getUserByemail(email, (err, user) => {
-    console.log(user)
+    // console.log(user)
     if(err) throw err;
     if(!user) {
       return res.json({success: false, msg: 'Wrong email'});

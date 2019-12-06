@@ -21,9 +21,17 @@ const Userdata = require ('../models/userdata')
           userid: data._id,
           // profilepic: "face.jpg"         
       }) 
-      // console.log(imgdata,"this is imagedatda") 
-      imgdata.save()  
-      doc.profilepic.push(imgdata._id) 
+      imgdata.save()
+      Image.addprofilepic(imgdata,(err,callback)=>{ 
+        if(err){
+         
+            res.json({success: false, msg:'Failed', error: err});
+          } else {
+            res.send(callback)
+          }
+      })
+      doc.profilepic.unshift(imgdata._id) 
+      console.log(doc)
         doc.save()
          return;
         }
@@ -44,11 +52,20 @@ const Userdata = require ('../models/userdata')
             userid: data._id,
             profilepic:fileName
         })     
-        // console.log(imgdata._id,"this is doc") 
-        imgdata.save()  
-        doc.profilepic.push(imgdata._id) 
+        imgdata.save()
+        Image.addprofilepic(imgdata,(err,callback)=>{ 
+          if(err){
+           
+              res.json({success: false, msg:'Failed', error: err});
+            } else {
+              res.send(callback)
+            }
+        })
+        
+        doc.profilepic.unshift(imgdata._id) 
+       
         doc.save()
-        console.log(doc)                        
+                               
     })
      .catch(err=>{
      console.log(err)

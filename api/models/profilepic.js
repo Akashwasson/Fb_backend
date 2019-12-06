@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const Userdata = require('../models/userdata');
  
 const basicdata = mongoose.Schema({  
     _id: mongoose.Schema.Types.ObjectId,
@@ -7,4 +8,13 @@ const basicdata = mongoose.Schema({
     Post:  { type: mongoose.Schema.Types.ObjectId, ref: 'Post'},
 });
 
-module.exports = mongoose.model('Profilepic', basicdata);
+const profilepicschema =module.exports = mongoose.model('Profilepic', basicdata);
+
+module.exports.addprofilepic = function (data,callback){
+       let query = {userid:data.userid};
+       let datad = {
+             profilepic: data.profilepic
+       }
+       
+     profilepicschema.findOneAndUpdate(query,datad,{upsert:false, new: false },callback)
+}
