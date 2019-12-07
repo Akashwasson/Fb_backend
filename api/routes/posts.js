@@ -11,7 +11,7 @@ const fs = require ('fs')
 router.post("/video",(req,res)=>{
   var list = []
     var data= req.body;
-    Userdata.findById( data.userid)
+    Userdata.findById( data.userid).exec()
     .then(result=>{
       // console.log(result, 'this is result')
       if(!result){
@@ -91,6 +91,9 @@ router.post("/video",(req,res)=>{
       })
       
     })
+    .catch(err=>{
+      error:err
+  })
 })
 
 // text and image posting here
@@ -98,7 +101,7 @@ router.post("/video",(req,res)=>{
   router.post("/", (req,res,next) =>{
     var list = []
     var data= req.body;
-    Userdata.findById( data.userid)
+    Userdata.findById( data.userid).exec()
     .then(result=>{
       // console.log(result, 'this is result')
       if(!result){
