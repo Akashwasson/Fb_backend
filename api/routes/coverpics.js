@@ -92,6 +92,23 @@ const Userdata = require ('../models/userdata')
    })
   })
   
+  router.post("/emptyarray", (req,res) =>{
+    datad={
+      userid:req.body.userid
+  }
+ Image.emptyarray(datad,(err,callback)=>{
+   if(!callback){
+     console.log('failed')
+   }
+    if(err){
+     
+        res.json({success: false, msg:'Failed', error: err});
+      } else {
+        //  console.log(callback)
+        res.send(callback)
+      }
+  })
+  })
 
   module.exports = router;
 

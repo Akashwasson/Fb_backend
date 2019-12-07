@@ -23,7 +23,7 @@ module.exports.findbyrequester = function(data, callback){
 }
 
 module.exports.sendrequest = function(data,callback){
-    console.log(data)
+    // console.log(data)
     var query= {participants:{$all:[
         {"$elemMatch":{id:data.requester}},{"$elemMatch":{id:data.recipient}}]}};
         var datad = {

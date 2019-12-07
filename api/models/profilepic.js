@@ -10,11 +10,18 @@ const basicdata = mongoose.Schema({
 
 const profilepicschema =module.exports = mongoose.model('Profilepic', basicdata);
 
+module.exports.emptyarray = function (data,callback){
+       let query = {_id:data.userid};
+      //  let query1 = {userid: data.userid};
+   
+      Userdata.findOneAndUpdate(query,{$set:{profilepic:[]}},callback)
+}
+
 module.exports.addprofilepic = function (data,callback){
-       let query = {userid:data.userid};
-       let datad = {
-             profilepic: data.profilepic
-       }
-       
-     profilepicschema.findOneAndUpdate(query,datad,{upsert:false, new: false },callback)
+  let query = {userid:data.userid};
+  let datad = {
+        profilepic: data.profilepic
+  }
+  
+profilepicschema.findOneAndUpdate(query,datad,{upsert:false, new: false },callback)
 }
