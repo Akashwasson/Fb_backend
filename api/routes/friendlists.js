@@ -46,7 +46,6 @@ router.get("/", (req,res) =>{
        
           res.json({success: false, msg:'Failed', error: err});
         } else {
-          //  console.log(callback)
           res.send(callback)
         }
     })

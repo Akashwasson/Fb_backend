@@ -23,7 +23,7 @@ module.exports.findbyrequester = function(data, callback){
 }
 
 module.exports.sendrequest = function(data,callback){
-    // console.log(data)
+    
     var query= {participants:{$all:[
         {"$elemMatch":{id:data.requester}},{"$elemMatch":{id:data.recipient}}]}};
         var datad = {
@@ -33,7 +33,7 @@ module.exports.sendrequest = function(data,callback){
             participants:   [{id:data.requester},{id:data.recipient}],
             createdAt:      new Date(),
         }
-        // ,datad,{upsert:true, new: true },
+        
       friendrqst.findOneAndUpdate(query,datad,{upsert:true, new: true },callback)
 }
 

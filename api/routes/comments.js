@@ -8,7 +8,8 @@ const Post = require('../models/post');
 router.get("/", (req,res)=>{
     Comment.find()
     .exec().then(result=>{
-     console.log(res.send(result))
+      res.send(result)
+    //  console.log(res.send(result))
    })
    .catch(err=>{
        error:err
@@ -18,7 +19,7 @@ router.get("/", (req,res)=>{
  router.post("/", (req,res,next)=>{
   Post.findById(req.body.post_id)
   .then(data => {
-      console.log(data)
+
     if(!data){
        return res.status(404).json({
            message: "Post not found"
@@ -33,7 +34,6 @@ router.get("/", (req,res)=>{
        });
        posted.save()
        .then(result =>{
-           console.log(result)
            res.status(201).json({ 
              message: "comment uploaded succesfully",
               createdcomment:{
@@ -48,7 +48,7 @@ router.get("/", (req,res)=>{
          data.save()    
   })
    .catch(err=>{
-   console.log(err)
+
       res.status(500).json({
           message: "comment failed",
           error: err

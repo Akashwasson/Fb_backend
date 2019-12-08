@@ -13,7 +13,6 @@ router.post("/video",(req,res)=>{
     var data= req.body;
     Userdata.findById( data.userid).exec()
     .then(result=>{
-      // console.log(result, 'this is result')
       if(!result){
         return res.status(404).json({
             message: "Userdata not found"
@@ -21,18 +20,15 @@ router.post("/video",(req,res)=>{
           });
         }
           var base64Data = req.body.base64Data.replace(/,/g,"/").split("/");
-          // console.log(base64Data[1]);
           var filetype = base64Data[1].replace(/,/g,"").split(';');
-          console.log(filetype)
           var encoding= filetype[1];
           filetype = filetype[0];
-          console.log(filetype);
           base64Data.splice(0,2);
           base64Data=base64Data.join('/');
 
           var fileName = data.userid +  new Date().toISOString().replace(/:/g, '-') + data.filename ;
           fs.writeFile('./uploads/posts/'+ fileName, base64Data, encoding, function(err) {
-            //  console.log(err, 'this is error
+            //  console.log(err, 'this is error)
           
           });
           
@@ -47,14 +43,12 @@ router.post("/video",(req,res)=>{
             createdAt:      new Date(),
           })
            videodata.save()
-          console.log(videodata._id,"this is doc") 
           var   datad={
             email:data.email
         }
           
           friendlist.findbyemail(datad,(err,callback)=>{
             if(err){
-                 console.log(err)
                 res.json({success: false, msg:'Failed', error: err});
               } else {
                     list.push(callback)
@@ -71,8 +65,7 @@ router.post("/video",(req,res)=>{
                         if(err){
                          
                           res.json({success: false, msg:'Failed', error: err});
-                        } else {
-                           console.log(callback1,'final call')
+                        } else {                          
                           res.send(callback1)
                         }
                       } catch (error) {
@@ -103,7 +96,6 @@ router.post("/video",(req,res)=>{
     var data= req.body;
     Userdata.findById( data.userid).exec()
     .then(result=>{
-      // console.log(result, 'this is result')
       if(!result){
         return res.status(404).json({
             message: "Userdata not found"
@@ -122,14 +114,12 @@ router.post("/video",(req,res)=>{
         createdAt:      new Date(),
       })
           posttext.save()
-          // console.log(posttext._id,'this is iddd')
        var   datad={
             email:data.email
         }
           
           friendlist.findbyemail(datad,(err,callback)=>{
             if(err){
-                 console.log(err)
                 res.json({success: false, msg:'Failed', error: err});
               } else {
                     list.push(callback)
@@ -147,7 +137,6 @@ router.post("/video",(req,res)=>{
                          
                           res.json({success: false, msg:'Failed', error: err});
                         } else {
-                           console.log(callback1,'final call')
                           res.send(callback1)
                         }
                       } catch (error) {
@@ -163,16 +152,14 @@ router.post("/video",(req,res)=>{
         return;
     }
     var base64Data = req.body.base64Data.split("/");
-    console.log(base64Data[1]);
     var filetype = base64Data[1].replace(/,/g,"").split(';');
     var encoding= filetype[1];
     filetype = filetype[0];
-    console.log(filetype);
     base64Data.splice(0,2);
     base64Data='/'+base64Data.join('/');
     var fileName = data.userid +  new Date().toISOString().replace(/:/g, '-') + data.filename ;
     fs.writeFile('./uploads/posts/'+ fileName, base64Data, encoding, function(err) {
-      //  console.log(err, 'this is error
+      //  console.log(err, 'this is error)
     
     });
     
@@ -187,14 +174,12 @@ router.post("/video",(req,res)=>{
       createdAt:      new Date(),
     })
      imgdata.save()
-    console.log(imgdata._id,"this is doc") 
     var   datad={
       email:data.email
   }
     
     friendlist.findbyemail(datad,(err,callback)=>{
       if(err){
-           console.log(err)
           res.json({success: false, msg:'Failed', error: err});
         } else {
               list.push(callback)
@@ -212,7 +197,6 @@ router.post("/video",(req,res)=>{
                    
                     res.json({success: false, msg:'Failed', error: err});
                   } else {
-                     console.log(callback1,'final call')
                     res.send(callback1)
                   }
                 } catch (error) {
@@ -249,9 +233,6 @@ router.post("/video",(req,res)=>{
   router.get("/byuserid/:userid", (req,res) =>{
     Post.find({userid: req.params.userid}).sort({ _id: -1 }).populate({path:'profilepic comments',populate:{path:'userid',populate:{path:'profilepic'}}})
     .exec().then(result=>{
-       if(!result){
-         console.log(1)
-       }
      res.send(result)
    })
    .catch(err=>{

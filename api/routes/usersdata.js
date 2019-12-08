@@ -53,7 +53,6 @@ router.get('/mail/:email',(req, res)=>{
  router.get('/byname/:username',(req, res)=>{
    Userdata.find({username: req.params.username}).populate('coverpic').populate('profilepic')
    .then(result=>{
-      console.log(result)
       if(result){
      
        res.send(result)
@@ -64,19 +63,5 @@ router.get('/mail/:email',(req, res)=>{
      })
    
   });
-
-//  router.get('/delpost', (req, res)=>{
-//   Userdata.find(req.body.email)
-//   .then(result=>{
-//        const x =result.map(item=> item.post).pop()
-//        console.log(x)
-//   })
-//   .catch(err=>{
-//    error:err
-// })
-    
-// });
-
-
 
 module.exports = router;

@@ -12,16 +12,14 @@ const fs = require ('fs')
    
     var data= req.body;
     var base64Data = req.body.base64Data.split("/");
-    console.log(base64Data[1]);
     var filetype = base64Data[1].replace(/,/g,"").split(';');
     var encoding= filetype[1];
     filetype = filetype[0];
-    console.log(filetype);
     base64Data.splice(0,2);
     base64Data='/'+base64Data.join('/');
     var fileName = data.userid +  new Date().toISOString().replace(/:/g, '-') + data.filename ;
     fs.writeFile('./uploads/'+ fileName, base64Data, encoding, function(err) {
-      console.log(err, 'this is error');
+      // console.log(err, 'this is error');
     });
     
     const imgdata =new Image({
@@ -38,7 +36,7 @@ const fs = require ('fs')
   router.get("/", (rq,res) =>{
     Image.find().populate('comments')
     .exec().then(result=>{
-     console.log(res.send(result))
+      res.send(result)
    })
    .catch(err=>{
        error:err
@@ -48,7 +46,7 @@ const fs = require ('fs')
   router.get("/:Id", (req,res) =>{
     Image.findById(req.params.Id)
     .exec().then(result=>{
-     console.log(res.send(result))
+      res.send(result)
    })
    .catch(err=>{
        error:err

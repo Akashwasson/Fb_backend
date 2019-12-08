@@ -103,7 +103,6 @@ router.get("/:id", (req, res)=>{
     if(err){
       res.json({success: false, msg:'Failed to find register user'});
     } else {
-      // console.log(user)
       res.json({success: true, msg:'Founded registered user sucessfully'});
       
     }
@@ -116,7 +115,6 @@ router.post('/authenticate', (req, res, next) => {
   const password = req.body.password;
  
   User.getUserByemail(email, (err, user) => {
-    // console.log(user)
     if(err) throw err;
     if(!user) {
       return res.json({success: false, msg: 'Wrong email'});

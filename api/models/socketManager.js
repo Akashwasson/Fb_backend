@@ -13,9 +13,7 @@ const socManager = module.exports =  mongoose.model('socketManager' , userSocket
 
 module.exports.findSocket = (data) => {
     return	socManager.findOne({userId:data})
-    // .then(result=>{
-    //     console.log(result,'this is result')
-    // })
+   
 }
 module.exports.findbyuserid =function(data, callback) {
     var query = {userId:data.userId} 
@@ -41,11 +39,9 @@ module.exports.disconnectSocket = function(data, callback){
         disconenctedAt: new Date(),
         status:        'Offline',
     }
-    // console.log('this is disconnect')
     socManager.findOneAndUpdate(query,datad,callback);
    
 }
 module.exports.auth = (data)=>{
-    // console.log(data);
     return socManager.findOne({socketId:data.socketId, userId: data.userId , status: 'Online'})
 }

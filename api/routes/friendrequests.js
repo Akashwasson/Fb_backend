@@ -32,19 +32,11 @@ router.post('/send',(req,res)=>{
                 msg:"Friendlist of this user not found"
             })          
         }
-
         const frndrqst = new Friendrequest({
             sentto: req.body.id
         })
        
-        frndrqst.save().then(doc=>{
-            if(!doc){
-                console.log(1)
-            }
-            console.log(2)
-        })
-          
-    
+        frndrqst.save()
    })
     
    .catch(err=>{
@@ -108,11 +100,9 @@ router.get("/", (req,res) =>{
    }
    Friendrequest.rejectrequest(data,(err,callback)=>{
      if (callback){
-       console.log('succesfull')
+      //  console.log('succesfull')
      }
-     else{
-       console.log(err)
-     }
+
    })
    })
 

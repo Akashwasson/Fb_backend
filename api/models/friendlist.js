@@ -15,9 +15,6 @@ module.exports.findbyemail = function(data, callback){
         if(doc){
             //  console.log("success")
         }
-        else{
-            console.log("failed")
-        }
     })
     .catch(err=>{
         error:err
@@ -28,6 +25,5 @@ module.exports.removefriend = function(data, callback){
      var query1 = {"_id": data.friendid};
     var query = {email: data.email};
     friendlists.findOneAndUpdate(query,{$pullAll:{friendsid:[query1]}},callback)
-    // .populate({path:'friendsid', populate:{path:'profilepic'}}) 
-   
+    
 }

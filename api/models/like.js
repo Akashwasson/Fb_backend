@@ -16,10 +16,7 @@ module.exports.addlikes = function(data, callback){
     userid: data.userid,
     postid: data.postid
   }) 
-//   .save()
 
-    // Like.findOneAndUpdate(query1,{postid:{postid:data.postid},$push:{"userid":data.userid}},{ upsert: true , new : true},
-    // callback);
      Post.findOneAndUpdate(query,{$push:{likes:data.userid}},callback);
 }
 
@@ -32,5 +29,4 @@ module.exports.deluserlike = function(data, callback){
     var query = {_id: data.postid};
     var query1 = {postid: data.postid};
      Post.findOneAndUpdate(query,{$pullAll:{"likes":data.userid}}, callback);
-    //  Like.findOneAndDelete(query1,{$pullAll:{"userid":data.userid}}, callback);
 }

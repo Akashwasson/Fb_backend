@@ -22,9 +22,7 @@ module.exports.findbyemail = function(data, callback){
         if(doc){
             //   console.log("success11")
         }
-        else{
-            // console.log("failed")
-        }
+        
     })
     .catch(err=>{
         error:err
