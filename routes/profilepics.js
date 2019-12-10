@@ -14,6 +14,7 @@ const Userdata = require ('../models/userdata')
            });
         }
          var data= req.body;
+         // if user has not selected any pic
          if(data.base64Data==""){
          const imgdata =new Image({
           _id: mongoose.Types.ObjectId(),
@@ -29,10 +30,11 @@ const Userdata = require ('../models/userdata')
             res.send(callback)
           }
       })
-      doc.profilepic.push(imgdata._id) 
+        doc.profilepic.push(imgdata._id) 
         doc.save()
          return;
         }
+        // if user has selected a pic
          var base64Data = req.body.base64Data.split("/");
          var filetype = base64Data[1].replace(/,/g,"").split(';');
          var encoding= filetype[1];
@@ -56,12 +58,9 @@ const Userdata = require ('../models/userdata')
             } else {
               res.send(callback)
             }
-        })
-        
-        doc.profilepic.push(imgdata._id) 
-       
-        doc.save()
-                               
+        })       
+        doc.profilepic.push(imgdata._id)   
+        doc.save()                          
     })
      .catch(err=>{
         res.status(500).json({
@@ -107,9 +106,8 @@ const Userdata = require ('../models/userdata')
     datad={
       userid:req.body.userid
   }
- Image.emptyarray(datad,(err,callback)=>{
-    if(err){
-     
+   Image.emptyarray(datad,(err,callback)=>{
+    if(err){    
         res.json({success: false, msg:'Failed', error: err});
       } else {
         res.send(callback)

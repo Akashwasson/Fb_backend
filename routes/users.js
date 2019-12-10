@@ -21,9 +21,7 @@ router.post('/',  (req, res, next) => {
   });
   
   User.addUser(newUser, (err, user) => {
-   
-     if(user){
-      
+     if(user){     
       //creating token here 
       try {       
         User.getUserByemail(req.body.email, (err, user) => {
@@ -35,8 +33,7 @@ router.post('/',  (req, res, next) => {
           User.comparePassword(req.body.password, user.password, (err, isMatch) => {
             
             if(err) throw err;
-            if(isMatch) {
-              
+            if(isMatch) {            
               const token = jwt.sign({data: user}, config.secret, {
                 expiresIn: 604800 // 1 week
               });
@@ -61,6 +58,7 @@ router.post('/',  (req, res, next) => {
      }
   });
 
+  // this is the main model..it contains username ,userid, profilepic,coverpic and email
   const posted = new Userdata({
     _id: new mongoose.Types.ObjectId(),
     username: req.body.firstName + " "+ req.body.lastName,
@@ -68,19 +66,20 @@ router.post('/',  (req, res, next) => {
 });
  
 posted.save()
-   // creating empty friendlist for each user
+   // creating empty friendlist for the new user
   const friendlist = new Friendlist({
-       email : req.body.email,  
-       _id : posted._id
+    email : req.body.email,  
+    _id : posted._id
   })
    friendlist.save();
-
+   // creating empty friendpost for the new user
    const friendpost = new Friendpost({
      email : req.body.email,
      _id : posted._id
    })
    friendpost.save();
 
+    // creating empty introduction for the new user
    const introschema = new Introschema({
      email : req.body.email,
      _id : posted._id

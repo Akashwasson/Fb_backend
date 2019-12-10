@@ -14,6 +14,8 @@ router.get('/', (req, res)=>{
 })
      
 });
+
+
 router.delete('/:id', (req, res)=>{
   Userdata.remove({_id:req.params.id})
   .then(result=>{

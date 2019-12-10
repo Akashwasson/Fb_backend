@@ -28,6 +28,7 @@ router.post("/",(req,res)=>{
 
 });
 
+
 router.get("/", (req,res) =>{
     introschema.find()
     .exec().then(result=>{
@@ -38,6 +39,7 @@ router.get("/", (req,res) =>{
    })
   });
 
+  
   router.get("/:email", (req,res) =>{
     datad={
         email:req.params.email

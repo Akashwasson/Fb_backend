@@ -15,8 +15,7 @@ router.post("/video",(req,res)=>{
     .then(result=>{
       if(!result){
         return res.status(404).json({
-            message: "Userdata not found"
-            
+           message: "Userdata not found"        
           });
         }
           var base64Data = req.body.base64Data.replace(/,/g,"/").split("/");
@@ -45,37 +44,35 @@ router.post("/video",(req,res)=>{
            videodata.save()
           var   datad={
             email:data.email
-        }
-          
+        }         
+        // sending this post to all friends
           friendlist.findbyemail(datad,(err,callback)=>{
             if(err){
                 res.json({success: false, msg:'Failed', error: err});
-              } else {
-                    list.push(callback)
-                    var friendsdata = '';
-                     friendsdata =(list.map(item=>item.friendsid))
-                     var ids = friendsdata[0].map(item=>item._id)
-                     for(var i =0; i<ids.length;i++){
-                       var newdata ={
-                         id: ids[i],
-                         postid: videodata._id
-                       }
-                       friendpost.addposts(newdata,(err,callback1)=>{
-                      try {
-                        if(err){
-                         
-                          res.json({success: false, msg:'Failed', error: err});
-                        } else {                          
-                          res.send(callback1)
-                        }
-                      } catch (error) {
-                        
-                      }  
-                      })
-                      
-                      
-                     }
-                
+              } 
+              else {
+                list.push(callback)
+                var friendsdata = '';
+                  friendsdata =(list.map(item=>item.friendsid))
+                  var ids = friendsdata[0].map(item=>item._id)
+                  ids.push(data.userid)
+                  for(var i =0; i<ids.length;i++){
+                    var newdata ={
+                      id: ids[i],
+                      postid: videodata._id
+                    }
+                    friendpost.addposts(newdata,(err,callback1)=>{
+                  try {
+                    if(err){                    
+                      res.json({success: false, msg:'Failed', error: err});
+                    } else {                          
+                      res.send(callback1)
+                    }
+                  } catch (error) {
+                    
+                  }  
+                  })
+                  }            
               }
           })
            
@@ -89,8 +86,8 @@ router.post("/video",(req,res)=>{
   })
 })
 
-// text and image posting here
 
+// text and image posting here
   router.post("/", (req,res,next) =>{
     var list = []
     var data= req.body;
@@ -98,11 +95,11 @@ router.post("/video",(req,res)=>{
     .then(result=>{
       if(!result){
         return res.status(404).json({
-            message: "Userdata not found"
-            
+            message: "Userdata not found"         
           });
         }
    
+        // if user has not selected any pic
     if(data.base64Data==""){
       const posttext = new Post({
         _id: mongoose.Types.ObjectId(),
@@ -113,11 +110,11 @@ router.post("/video",(req,res)=>{
         email: data.email,
         createdAt:      new Date(),
       })
-          posttext.save()
-       var   datad={
+        posttext.save()
+       var datad={
             email:data.email
         }
-          
+           // sending this post to all friends
           friendlist.findbyemail(datad,(err,callback)=>{
             if(err){
                 res.json({success: false, msg:'Failed', error: err});
@@ -126,6 +123,7 @@ router.post("/video",(req,res)=>{
                     var friendsdata = '';
                      friendsdata =(list.map(item=>item.friendsid))
                      var ids = friendsdata[0].map(item=>item._id)
+                     ids.push(data.userid)
                      for(var i =0; i<ids.length;i++){
                        var newdata ={
                          id: ids[i],
@@ -151,6 +149,7 @@ router.post("/video",(req,res)=>{
           })
         return;
     }
+    // if user has selected an image
     var base64Data = req.body.base64Data.split("/");
     var filetype = base64Data[1].replace(/,/g,"").split(';');
     var encoding= filetype[1];
@@ -177,48 +176,42 @@ router.post("/video",(req,res)=>{
     var   datad={
       email:data.email
   }
-    
+     // sending this post to all friends
     friendlist.findbyemail(datad,(err,callback)=>{
       if(err){
           res.json({success: false, msg:'Failed', error: err});
-        } else {
-              list.push(callback)
-              var friendsdata = '';
-               friendsdata =(list.map(item=>item.friendsid))
-               var ids = friendsdata[0].map(item=>item._id)
-               for(var i =0; i<ids.length;i++){
-                 var newdata ={
-                   id: ids[i],
-                   postid: imgdata._id
-                 }
-                 friendpost.addposts(newdata,(err,callback1)=>{
-                try {
-                  if(err){
-                   
-                    res.json({success: false, msg:'Failed', error: err});
-                  } else {
-                    res.send(callback1)
-                  }
-                } catch (error) {
-                  
-                }  
-                })
+        }
+         else {
+          list.push(callback)
+          var friendsdata = '';
+            friendsdata =(list.map(item=>item.friendsid))
+            var ids = friendsdata[0].map(item=>item._id)
+            ids.push(data.userid)
+            for(var i =0; i<ids.length;i++){
+              var newdata ={
+                id: ids[i],
+                postid: imgdata._id
+              }
+              friendpost.addposts(newdata,(err,callback1)=>{
+            try {
+              if(err){
                 
-                
-               }
-          
+                res.json({success: false, msg:'Failed', error: err});
+              } else {
+                res.send(callback1)
+              }
+            } catch (error) {
+              
+            }  
+            })
+            }         
         }
     })
-     
-
 })
 .catch(err=>{
    error:err
 })
-
-    // return res.json({ type:filetype, encoding: encoding, base: base64Data})
-
-  });  
+});  
 
   router.get("/", (req,res) =>{
     Post.find().populate('profilepic').populate('comments')
@@ -228,7 +221,8 @@ router.post("/video",(req,res)=>{
    .catch(err=>{
        error:err
    })
-  })
+  });
+
 
   router.get("/byuserid/:userid", (req,res) =>{
     Post.find({userid: req.params.userid}).sort({ _id: -1 }).populate({path:'profilepic comments',populate:{path:'userid',populate:{path:'profilepic'}}})
@@ -238,7 +232,7 @@ router.post("/video",(req,res)=>{
    .catch(err=>{
        error:err
    })
-  })
+  });
 
   router.get("/:Id", (req,res) =>{
     Post.findById(req.params.Id)
@@ -248,7 +242,7 @@ router.post("/video",(req,res)=>{
    .catch(err=>{
        error:err
    })
-  })
+  });
   
   router.delete("/:Id", (req,res) =>{
     Post.remove({_id:req.params.Id})
@@ -258,6 +252,6 @@ router.post("/video",(req,res)=>{
    .catch(err=>{
        error:err
    })
-  })
+  });
 
   module.exports = router;

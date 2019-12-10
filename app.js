@@ -2,10 +2,8 @@ const express = require('express');
 const app = express();
 const http = require('http');
 const server = http.Server(app);
-const path = require('path');
 const bodyParser = require('body-parser');
 const cors = require('cors');
-const passport = require('passport');
 const mongoose = require('mongoose');
 const config = require('./DB');
 const socket = require('socket.io');
@@ -28,11 +26,6 @@ app.use(express.static(__dirname + '/uploads'));
 //limiting the size
 app.use(bodyParser.json({limit: '50mb'}));
 app.use(bodyParser.urlencoded({limit: '50mb', extended: true}));
-
-
-// Passport Middleware
-app.use(passport.initialize());
-app.use(passport.session());
 
 const images = require ('./routes/images');
 const users = require('./routes/users');

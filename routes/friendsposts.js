@@ -23,7 +23,9 @@ router.get('/',(req,res)=>{
       .catch(err=>{
           error:err
       })
-})
+});
+
+
 router.get("/:Id", (req,res) =>{
     Friendspost.find({_id: req.params.Id}).populate({path:'posts', populate:{path:'profilepic comments',populate:{path:'userid',populate:{path:'profilepic'}}}}).sort({ _id: -1 })
     .exec().then(result=>{
@@ -34,12 +36,12 @@ router.get("/:Id", (req,res) =>{
    })
   });
   
+
   router.delete("/:Id/:postid", (req,res)=>{
     var datad={
         Id:req.params.Id,
         postid:req.params.postid
-    }
-    
+    }  
     Friendspost.removepost(datad,(err,callback)=>{
       if(err){ 
           res.json({success: false, msg:'Failed', error: err});
