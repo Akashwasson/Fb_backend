@@ -2,7 +2,6 @@ var mongoose = require('mongoose');
 var Post = require('../models/post');
 
 var likeschema = mongoose.Schema({
-    // likes : {type:String, default:""},
     userid: [{type: mongoose.Schema.Types.ObjectId, ref: 'Userdata'}],
     postid:{type: mongoose.Schema.Types.ObjectId, ref: 'Post' }
 });

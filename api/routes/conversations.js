@@ -6,17 +6,17 @@ const Conversation = require('../models/conversation');
 
 router.post('/',(req,res)=>{
    const conversation = new Conversation({
-     senderid:req.body.senderid,
+      senderid:req.body.senderid,
       recieverid:req.body.recieverid
    }).save()
    .then(doc=>{
     res.json({
-        message:'succesfull'
+      message:'succesfull'
     })
 })
-.catch(err=>{
-    error:err
-    })
+  .catch(err=>{
+      error:err
+      })
 });
 
 router.get("/", (req,res) =>{

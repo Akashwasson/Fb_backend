@@ -17,16 +17,7 @@ const introschema = module.exports = mongoose.model('Introschema',intro_schema);
 
 module.exports.findbyemail = function(data, callback){
     var query = {email: data.email};
-    introschema.findOne(query,callback) 
-    .then(doc=>{
-        if(doc){
-            //   console.log("success11")
-        }
-        
-    })
-    .catch(err=>{
-        error:err
-     })
+    introschema.findOne(query,callback);
 }
 
 module.exports.fillintro = function(data ,callback){

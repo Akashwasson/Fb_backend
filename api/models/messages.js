@@ -1,10 +1,10 @@
 var mongoose = require('mongoose');
 
 var messageSchema = mongoose.Schema({
-    sender:        {type: String},
-    message:       {type: String},
+    sender:         {type: String},
+    message:        {type: String},
     type:           {type: String},
-    createdAt:          {type: Date},
+    createdAt:      {type: Date},
     seenAt:         {type: Date, default: null},
 });
 

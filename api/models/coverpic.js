@@ -14,5 +14,5 @@ module.exports.emptyarray = function (data,callback){
     let query = {_id:data.userid};
    //  let query1 = {userid: data.userid};
 
-   Userdata.findOneAndUpdate(query,{$set:{coverpic:[]}},callback)
+   Userdata.findOneAndUpdate(query,{$set:{coverpic:[]}},{upsert:true, new: true },callback)
 }

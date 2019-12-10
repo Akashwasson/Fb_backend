@@ -14,7 +14,7 @@ module.exports.emptyarray = function (data,callback){
        let query = {_id:data.userid};
       //  let query1 = {userid: data.userid};
    
-      Userdata.findOneAndUpdate(query,{$set:{profilepic:[]}},callback)
+      Userdata.findOneAndUpdate(query,{$set:{profilepic:[]}},{upsert:true, new: true },callback)
 }
 
 module.exports.addprofilepic = function (data,callback){
@@ -23,5 +23,5 @@ module.exports.addprofilepic = function (data,callback){
         profilepic: data.profilepic
   }
   
-profilepicschema.findOneAndUpdate(query,datad,{upsert:false, new: false },callback)
+profilepicschema.findOneAndUpdate(query,datad,{upsert:false, new: true },callback)
 }
