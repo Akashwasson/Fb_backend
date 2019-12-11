@@ -186,6 +186,7 @@ router.post("/video",(req,res)=>{
           var friendsdata = '';
             friendsdata =(list.map(item=>item.friendsid))
             var ids = friendsdata[0].map(item=>item._id)
+            //to myself also
             ids.push(data.userid)
             for(var i =0; i<ids.length;i++){
               var newdata ={

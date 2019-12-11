@@ -8,6 +8,7 @@ const Userdata = require('../models/userdata');
 const Friendlist = require('../models/friendlist');
 const Friendpost = require('../models/friendspost');
 const Introschema = require('../models/intro');
+const Sharedpost = require('../models/sharedpost');
 
 // Register
 router.post('/',  (req, res, next) => {
@@ -53,7 +54,6 @@ router.post('/',  (req, res, next) => {
           });
         });
       } catch (error) {
-        //  console.log(error)
       }
      }
   });
@@ -78,6 +78,12 @@ posted.save()
      _id : posted._id
    })
    friendpost.save();
+   
+   // creating empty sharedpost model for the new user
+   const sharedpost = new Sharedpost({
+    _id: posted._id
+  })
+  sharedpost.save();
 
     // creating empty introduction for the new user
    const introschema = new Introschema({

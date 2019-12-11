@@ -40,6 +40,7 @@ const likes = require('./routes/likes');
 const socketManager = require('./routes/socketManagers');
 const friendpost = require('./routes/friendsposts');
 const introschema = require('./routes/intros');
+const sharedpost = require('./routes/sharedposts');
 
 
 app.use('/images', images)
@@ -55,6 +56,7 @@ app.use('/likes',likes);
 app.use('/socketmanager',socketManager);
 app.use('/friendsposts', friendpost);
 app.use('/introschema',introschema);
+app.use('/sharedpost',sharedpost);
 
 // Index Route
 app.get('/', (req, res) => {

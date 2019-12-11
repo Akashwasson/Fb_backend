@@ -24,3 +24,12 @@ module.exports.addMessage = function(data){
     
    return Messages.create(datad);
 }
+
+module.exports.seen = function(data, callback){
+    var query = {_id: data._id};
+    var datad = {
+        seenAt:  new Date()
+    }
+    Messages.findOneAndUpdate(query,datad,{upsert:false, new: true },callback);
+  
+  }
