@@ -42,15 +42,14 @@ module.exports.mysocket = (io)=>{
       });
 
       socket.on('messageseen',data=>{
-        console.log(data)
         //senderid,recieverid,msgid
         try{
           data.forEach(element => {
             Messages.seen(element,async (err,mdata)=>{
               if(!err){
-                var sendto = await SocketManager.findSocket(element.reciever);
+                var sendto = await SocketManager.findSocket(element.sender);
                 sdata = {
-                  sender: element.sender,
+                  sender: element.reciever,
                   messageId : mdata._id,
                   seenAt:   mdata.seenAt
                 }
@@ -77,8 +76,8 @@ module.exports.mysocket = (io)=>{
             
             if(data.msg != null){
               if(sendto != null){
-            io.to(sendto.socketId).emit('new_msg', {from:data.from, to:data.to, msg: data.msg ,msgid:mymessage._id});
-            io.to(socket.id).emit('new_msg', {from:data.from, to:data.to, msg: data.msg , msgid:mymessage._id});  
+            io.to(sendto.socketId).emit('new_msg', mymessage);
+            io.to(socket.id).emit('new_msg', mymessage);  
             }
           }
             
