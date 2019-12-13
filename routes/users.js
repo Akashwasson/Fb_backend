@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const mongoose = require ('mongoose');
+const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const config = require('../config/config');
 const User = require('../models/user');
@@ -93,6 +94,23 @@ posted.save()
    introschema.save();
 
 });
+
+// reset password
+router.post("/reset",async (req,res)=>{
+ 
+  User.resetPassword(req.body,(err, user)=> {
+    if(!user) {
+      return res.json({success: false, msg: 'wrong email'});
+    }
+
+    if(err){
+      return res.json({success: false, msg:'Failed'});
+    } else {
+      res.json({success: true, msg: 'Successfull'});  
+    
+    }
+})
+})
 
 router.get("/", (req, res)=>{
   User.find().then(result => {
