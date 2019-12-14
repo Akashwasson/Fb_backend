@@ -14,9 +14,8 @@
   2. Open terminal in code editor and enter the command (npm install).
   3. And then enter the command (nodemon app.js) .
 
-## Development server
  
- Run frontend of facebook.
+# Also Run frontend of facebook.
 
 ## Designed and Developed by Akash
 

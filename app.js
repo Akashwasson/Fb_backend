@@ -27,7 +27,6 @@ app.use(express.static(__dirname + '/uploads'));
 app.use(bodyParser.json({limit: '50mb'}));
 app.use(bodyParser.urlencoded({limit: '50mb', extended: true}));
 
-const images = require ('./routes/images');
 const users = require('./routes/users');
 const posts = require('./routes/posts');
 const comments = require('./routes/comments');
@@ -43,7 +42,6 @@ const introschema = require('./routes/intros');
 const sharedpost = require('./routes/sharedposts');
 
 
-app.use('/images', images)
 app.use('/users', users);
 app.use('/posts', posts);
 app.use('/comments', comments);
