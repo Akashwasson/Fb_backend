@@ -4,7 +4,7 @@
 
  1. Install nodejs.
  2. Open "DB.js" and add your MongoDB URI, local or Atlas.
-    For local you have to install monogodb.
+    For local you have to install MongoDB
 
  3. Install code editor (VS Code).
  
